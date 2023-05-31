@@ -1,10 +1,9 @@
-from langchain.prompts import PromptTemplate, BasePromptTemplate
-
+from langchain.prompts import BasePromptTemplate, PromptTemplate
 
 mod_react_prefix = """Answer the following questions as best you can. You have access to only the following tools:"""
 
-# If after using 2 tools and the assistant has a partial final answer, then the assistant must formulate a final answer, and then add to it "I'm not sure if this is the answer you are looking for, but here is what I found." and then the assistant MUST stop searching. 
-# YOU MUST STRICTLY USE THE COLLECTED EVIDENCE FROM THE OBSERVATIONS, FROM THE INITIAL CONTEXT OR FROM PREVIOUS CONVERSATION, DO NOT ANSWER FROM MEMORY. 
+# If after using 2 tools and the assistant has a partial final answer, then the assistant must formulate a final answer, and then add to it "I'm not sure if this is the answer you are looking for, but here is what I found." and then the assistant MUST stop searching.
+# YOU MUST STRICTLY USE THE COLLECTED EVIDENCE FROM THE OBSERVATIONS, FROM THE INITIAL CONTEXT OR FROM PREVIOUS CONVERSATION, DO NOT ANSWER FROM MEMORY.
 
 
 mod_react_format_instructions = """The assistant can use ONLY the listed tools. The assistant MUST NOT make up tool names. 
@@ -53,8 +52,6 @@ Question: {input}
 Thought:{agent_scratchpad}"""
 
 # Initial Context:{pre_context}
-
-
 
 
 mod_evaluate_instructions = """<|im_start|>
@@ -149,8 +146,6 @@ Question: "{question}"
 """
 
 
-
-
 mod_chit_chat_instructions = """<|im_start|>
 The assistant is a super helpful assistant that plays the role of a chit chat buddy and is very talkative and friendly. The assistant must go through the below question and reply in a super friendly and talkative manner. The user wants to chit chat, so the assistant must indulge them. 
 
@@ -163,7 +158,6 @@ Question: "{question}"
 <|im_end|>
 <|im_start|>assistant
 """
-
 
 
 mod_qc_instructions = """<|im_start|>

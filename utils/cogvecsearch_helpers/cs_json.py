@@ -1,6 +1,4 @@
-
 from utils.env_vars import *
-
 
 field_json = {
     "name": "",
@@ -17,7 +15,7 @@ field_json = {
     "normalizer": None,
     "dimensions": None,
     "vectorSearchConfiguration": None,
-    "synonymMaps": []
+    "synonymMaps": [],
 }
 
 
@@ -36,13 +34,13 @@ vector_json = {
     "normalizer": None,
     "dimensions": 1536,
     "vectorSearchConfiguration": "vector-config",
-    "synonymMaps": []
+    "synonymMaps": [],
 }
 
 
 create_index_json = {
     "@odata.context": "https://cogvecseearch.search.windows.net/$metadata#indexes/$entity",
-    "@odata.etag": "\"0x8DB40C97F04622D\"",
+    "@odata.etag": '"0x8DB40C97F04622D"',
     "name": "vec-index",
     "defaultScoringProfile": None,
     "fields": [
@@ -61,7 +59,7 @@ create_index_json = {
             "normalizer": None,
             "dimensions": None,
             "vectorSearchConfiguration": None,
-            "synonymMaps": []
+            "synonymMaps": [],
         },
         {
             "name": "text",
@@ -78,7 +76,7 @@ create_index_json = {
             "normalizer": None,
             "dimensions": None,
             "vectorSearchConfiguration": None,
-            "synonymMaps": []
+            "synonymMaps": [],
         },
         {
             "name": "text_en",
@@ -95,7 +93,7 @@ create_index_json = {
             "normalizer": None,
             "dimensions": None,
             "vectorSearchConfiguration": None,
-            "synonymMaps": []
+            "synonymMaps": [],
         },
         {
             "name": "categoryId",
@@ -112,7 +110,7 @@ create_index_json = {
             "normalizer": None,
             "dimensions": None,
             "vectorSearchConfiguration": None,
-            "synonymMaps": []
+            "synonymMaps": [],
         },
         {
             "name": VECTOR_FIELD_IN_REDIS,
@@ -129,10 +127,10 @@ create_index_json = {
             "normalizer": None,
             "dimensions": 1536,
             "vectorSearchConfiguration": "vector-config",
-            "synonymMaps": []
+            "synonymMaps": [],
         },
         {
-            "name": 'cv_image_vector',
+            "name": "cv_image_vector",
             "type": "Collection(Edm.Single)",
             "searchable": True,
             "filterable": False,
@@ -146,10 +144,10 @@ create_index_json = {
             "normalizer": None,
             "dimensions": 1024,
             "vectorSearchConfiguration": "vector-config",
-            "synonymMaps": []
+            "synonymMaps": [],
         },
         {
-            "name": 'cv_text_vector',
+            "name": "cv_text_vector",
             "type": "Collection(Edm.Single)",
             "searchable": True,
             "filterable": False,
@@ -163,16 +161,11 @@ create_index_json = {
             "normalizer": None,
             "dimensions": 1024,
             "vectorSearchConfiguration": "vector-config",
-            "synonymMaps": []
-        }
+            "synonymMaps": [],
+        },
     ],
     "scoringProfiles": [],
-    "corsOptions": {
-        "allowedOrigins": [
-            "*"
-        ],
-        "maxAgeInSeconds": 60
-    },
+    "corsOptions": {"allowedOrigins": ["*"], "maxAgeInSeconds": 60},
     "suggesters": [],
     "analyzers": [],
     "normalizers": [],
@@ -183,7 +176,7 @@ create_index_json = {
     "similarity": {
         "@odata.type": "#Microsoft.Azure.Search.BM25Similarity",
         "k1": None,
-        "b": None
+        "b": None,
     },
     "semantic": {
         "defaultConfiguration": None,
@@ -191,33 +184,21 @@ create_index_json = {
             {
                 "name": "semantic-config",
                 "prioritizedFields": {
-                    "prioritizedContentFields": [
-                        {
-                            "fieldName": "text_en"
-                        }
-                    ],
-                    "prioritizedKeywordsFields": [
-                        {
-                            "fieldName": "categoryId"
-                        }
-                    ]
-                }
+                    "prioritizedContentFields": [{"fieldName": "text_en"}],
+                    "prioritizedKeywordsFields": [{"fieldName": "categoryId"}],
+                },
             }
-        ]
+        ],
     },
     "vectorSearch": {
         "algorithmConfigurations": [
             {
                 "name": "vector-config",
                 "kind": "hnsw",
-                "hnswParameters": {
-                    "m": 10,
-                    "efConstruction": 400,
-                    "metric": "cosine"
-                }
+                "hnswParameters": {"m": 10, "efConstruction": 400, "metric": "cosine"},
             }
         ]
-    }
+    },
 }
 
 
@@ -227,54 +208,41 @@ upload_doc_json = {
     "text_en": "",
     "categoryId": "",
     VECTOR_FIELD_IN_REDIS: [],
-    "@search.action": "upload"
+    "@search.action": "upload",
 }
 
-upload_docs_json = {
-    "value": [
-    ]
-}
-
+upload_docs_json = {"value": []}
 
 
 search_dict_vector = {
-    "vector": {
-        "value": [],
-        "fields": VECTOR_FIELD_IN_REDIS,
-        "k": NUM_TOP_MATCHES
-    },
+    "vector": {"value": [], "fields": VECTOR_FIELD_IN_REDIS, "k": NUM_TOP_MATCHES},
     "select": "*",
-    "filter": None
+    "filter": None,
 }
 
 
 search_dict_hybrid = {
-    "vector": {
-        "value": [],
-        "fields": VECTOR_FIELD_IN_REDIS,
-        "k": 10
-    },
+    "vector": {"value": [], "fields": VECTOR_FIELD_IN_REDIS, "k": 10},
     "search": "",
     "select": "*",
     "top": f"{NUM_TOP_MATCHES}",
-    "filter": None
+    "filter": None,
 }
 
 
-search_dict_semantic_hybrid= {
+search_dict_semantic_hybrid = {
     "vector": {
         "value": [],
         "fields": VECTOR_FIELD_IN_REDIS,
         "k": NUM_TOP_MATCHES,
     },
     "search": "",
-    "select":"*",
+    "select": "*",
     "queryType": "semantic",
     "semanticConfiguration": "semantic-config",
     "queryLanguage": "en-us",
     "captions": "extractive",
     "answers": "extractive",
     "top": f"{NUM_TOP_MATCHES*3}",
-    "filter": None
+    "filter": None,
 }
-

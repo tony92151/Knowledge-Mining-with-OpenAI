@@ -1,24 +1,19 @@
-import os
 import logging
+import os
 from datetime import datetime
+
+from langchain.prompts.chat import (ChatPromptTemplate,
+                                    HumanMessagePromptTemplate,
+                                    MessagesPlaceholder,
+                                    SystemMessagePromptTemplate)
+
 from utils import openai_helpers
-
-from langchain.prompts.chat import (
-    ChatPromptTemplate,
-    HumanMessagePromptTemplate,
-    MessagesPlaceholder,
-    SystemMessagePromptTemplate,
-)
-
-
 from utils.env_vars import *
-
-
 
 ## Original Prompt - too strict for OpenAI
 ## Answer the question using the above Context only, and if the answer is not contained within the Context above, say "Sorry, the query did not find a good match. Please rephrase your question":
 
-end_of_prev_prompt_tags="""
+end_of_prev_prompt_tags = """
 <|im_end|>
 <|im_start|>user
 """
@@ -74,14 +69,13 @@ Answer:
 
 
 def get_simple_prompt(context, query, history, pre_context):
-
     # logging.info(f"{CHOSEN_COMP_MODEL}, {GPT35_TURBO_COMPLETIONS_MODEL}, {CHOSEN_COMP_MODEL == GPT35_TURBO_COMPLETIONS_MODEL}")
-    todays_time = datetime.now().strftime('%A %B %d, %Y %H:%M:%S')
+    todays_time = datetime.now().strftime("%A %B %d, %Y %H:%M:%S")
 
     instruction_strict = instruction_template.format(strict=strict_prompt)
     instruction_simple = instruction_template.format(strict="")
 
-    if RESTRICTIVE_PROMPT == 'yes':
+    if RESTRICTIVE_PROMPT == "yes":
         instruction = instruction_strict
     else:
         instruction = instruction_simple
@@ -89,18 +83,21 @@ def get_simple_prompt(context, query, history, pre_context):
     gen = openai_helpers.get_generation(CHOSEN_COMP_MODEL)
 
     # if (CHOSEN_COMP_MODEL == GPT4_MODEL) or (CHOSEN_COMP_MODEL == GPT4_32K_MODEL):
-    if (gen == 4) or (gen == 3.5):        
+    if (gen == 4) or (gen == 3.5):
         messages = [
-                    SystemMessagePromptTemplate.from_template(instruction_template).format(strict=strict_prompt),
-                    HumanMessagePromptTemplate.from_template(body).format(history=history, 
-                                                                          query=query, 
-                                                                          pre_context=pre_context, 
-                                                                          context=context, 
-                                                                          todays_time=todays_time),
-                ]
+            SystemMessagePromptTemplate.from_template(instruction_template).format(
+                strict=strict_prompt
+            ),
+            HumanMessagePromptTemplate.from_template(body).format(
+                history=history,
+                query=query,
+                pre_context=pre_context,
+                context=context,
+                todays_time=todays_time,
+            ),
+        ]
         prompt = openai_helpers.convert_messages_to_roles(messages)
-    elif (CHOSEN_COMP_MODEL == GPT35_TURBO_COMPLETIONS_MODEL):
-
+    elif CHOSEN_COMP_MODEL == GPT35_TURBO_COMPLETIONS_MODEL:
         prompt = f"""
 <|im_start|>system
 {instruction}
@@ -128,8 +125,7 @@ Answer:
         """
 
     else:
-
-        prompt =f"""{instruction}
+        prompt = f"""{instruction}
 
 Initial Context: 
 {pre_context}
@@ -147,7 +143,7 @@ Question: {query}
 Answer:
 
         """
-    
+
     # logging.info(f"Using as prompt instruction: {instruction}")
     # print(f"Using as prompt instruction: {instruction}")
 

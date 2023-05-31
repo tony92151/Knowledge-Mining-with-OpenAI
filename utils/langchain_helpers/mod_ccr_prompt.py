@@ -59,7 +59,6 @@ Here is the user's input (remember to respond with a markdown code snippet of a 
 {{{{input}}}}"""
 
 
-
 TEMPLATE_TOOL_RESPONSE = """TOOL RESPONSE: 
 ---------------------
 [source name 1][source name 2] {observation}
